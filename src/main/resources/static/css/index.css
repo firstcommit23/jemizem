@@ -1,0 +1,24 @@
+#sidebar {
+    width: 260px;
+    z-index: -1;
+    background-color: #efefef;
+    bottom: 0;
+    position: fixed;
+    -webkit-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+    top: 0;
+    padding-top: 80px;
+    -webkit-box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
+    box-shadow: 0 0 35px 0 rgba(154,161,171,.15);
+}
+#sidebar .sidebar-item {
+    padding: 10px 20px;
+}
+#sidebar .sidebar-item .sidebar-main-img {
+    display: block;
+    line-height: 70px;
+    text-align:center;
+}
+#sidebar .sidebar-item .sidebar-main-img img {
+    width: 200px;
+}
