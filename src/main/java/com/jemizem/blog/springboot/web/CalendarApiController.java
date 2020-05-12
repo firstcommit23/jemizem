@@ -4,17 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class IndexController {
+public class CalendarApiController {
 
-    @GetMapping("/")
-    public String index() {
-
-        return "index";
-
-    }
-
-    @GetMapping("/calendar")
-    public String viewCalendar() {
+    @GetMapping("/api/v1/calendar/")
+    public String getCalendar() {
 
         return "calendar";
 
