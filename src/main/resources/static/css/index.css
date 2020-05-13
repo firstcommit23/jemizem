@@ -100,7 +100,7 @@ hr {
     color: #555;
 }
 
-/* content */
+/* content 2 */
 #wrap .content {
     float: left;
     width: 68.518518518518519%;
@@ -108,3 +108,14 @@ hr {
     box-sizing: border-box;
     height: 100%;
 }
+
+/* calendar */
+#calendar_nav {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.nav_item {
+    display: inline-block;
+    vertical-align: top;
+ }

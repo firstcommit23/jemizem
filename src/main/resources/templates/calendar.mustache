@@ -1,189 +1,169 @@
+<style>
+
+/* calendar */
+#calendar_nav {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.nav_item {
+    display: inline-block;
+    vertical-align: top;
+ }
+
+#calendar{
+    background-color: #fff;
+    height: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    margin-left: 8px;
+    margin: 40px 0 0;
+    padding: 10px 0;
+    border: #dadce0 1px solid;
+}
+#calendar .calendar_head{
+    margin: 0;
+    -webkit-align-items: stretch;
+    align-items: stretch;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-flex: none;
+    -webkit-flex: none;
+    flex: none;
+    height: 20px;
+}
+#calendar .calendar_head div {
+    border-right: #dadce0 1px solid;
+    -webkit-box-flex: 1 1 0%;
+    -webkit-flex: 1 1 0%;
+    flex: 1 1 0%;
+    text-align: center;
+    font-family: Roboto,Arial,sans-serif;
+    text-transform: uppercase;
+}
+.Bd2qQe {
+    margin: 0;
+    overflow: hidden;
+    -webkit-box-flex: 1 1 0%;
+    -webkit-flex: 1 1 0%;
+    flex: 1 1 0%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+.QIadxc {
+    position: relative;
+    overflow: hidden;
+    border-bottom: #dadce0 1px solid;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-flex: 1 1 0%;
+    -webkit-flex: 1 1 0%;
+    flex: 1 1 0%;
+}
+.gGDF0e {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
+.t8qpF {
+    font-size: 14px;
+    line-height: 30px;
+    border-right: #dadce0 1px solid;
+    color: #70757a;
+    -webkit-box-flex: 1 1 0%;
+    -webkit-flex: 1 1 0%;
+    flex: 1 1 0%;
+}
+</style>
+
 {{>layout/header}}
 <div id="wrap">
     {{>layout/sidebar}}
     <section class="content">
 
-        <div id="nav"></div>
-        <br />
-        <div id="dp"></div>
+        <div id="calendar_nav">
+            <div class="nav_item"><button>오늘</button></div>
+            <div class="nav_item"><button>◁</button></div>
+            <div class="nav_item"><button>▷</button></div>
+            <div class="nav_item"><span id="cal-nav-year">2020년</span> <span id="cal-nav_month">5월</span></div>
+            <div class="nav_item" style="float: right;">
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  style="padding-left:10px;">
+                            보기
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" href="#">Dropdown link</a>
+                            <a class="dropdown-item" href="#">Dropdown link</a>
+                        </div>
+                        <button id="btnGroupDrop2" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            월
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                            <a class="dropdown-item" href="#">Dropdown link</a>
+                            <a class="dropdown-item" href="#">Dropdown link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div role="grid" id="calendar">
+            <div role="row" class="calendar_head">
+                <div role="columnheader">
+                    <span>일요일</span>
+                </div>
+                <div role="columnheader">
+                    <span>월요일</span>
+                </div>
+                <div role="columnheader">
+                    <span>화요일</span>
+                </div>
+                <div role="columnheader">
+                    <span>수요일</span>
+                </div>
+                <div role="columnheader">
+                    <span>목요일</span>
+                </div>
+                <div role="columnheader">
+                    <span>금요일</span>
+                </div>
+                <div role="columnheader">
+                    <span>토요일</span>
+                </div>
+            </div>
+            <div role="presentation" class="Bd2qQe">
+                <div role="row" class="QIadxc">
+                    <div aria-hidden="true" class="gGDF0e">
+                    {{#calendar}}
+                        <div class="t8qpF">
+                            <span>{{day}}</span>
+                        </div>
+                    {{^br}}
+                    </div>
+                </div>
+                <div role="row" class="QIadxc">
+                    <div aria-hidden="true" class="gGDF0e">
+                    {{/br}}
+                    {{/calendar}}
+            </div>
+
+        </div>
     </section>
 </div>
 <!-- DayPilot library -->
-<script src="/js/daypilot/daypilot-all.min.js"></script>
-<script>
-
-    var nav = new DayPilot.Navigator("nav");
-    nav.selectMode = "month";
-    nav.onTimeRangeSelected = function(args) {
-        dp.startDate = args.day;
-        dp.update();
-        dp.events.load("/api/events");
-    };
-    nav.init();
-
-
-    var dp = new DayPilot.Month("dp");
-    dp.init();
-    dp.eventEndSpec = "Date";
-    dp.onTimeRangeSelected = function (args) {
-        DayPilot.Modal.prompt("Create a new event:", "Event").then(function (modal) {
-            dp.clearSelection();
-            if (!modal.result) {
-                return;
-            }
-            var params = {
-                start: args.start.toString(),
-                end: args.end.toString(),
-                text: modal.result,
-                resource: args.resource
-            };
-            $.ajax({
-                type: 'POST',
-                url: '/api/events/create',
-                data: JSON.stringify(params),
-                success: function (data) {
-                    dp.events.add(new DayPilot.Event(data));
-                    dp.message("Event created");
-                },
-                contentType: "application/json",
-                dataType: 'json'
-            });
-        });
-    };
-    dp.onEventMove = function (args) {
-        var params = {
-            id: args.e.id(),
-            start: args.newStart.toString(),
-            end: args.newEnd.toString(),
-            resource: args.newResource
-        };
-        $.ajax({
-            type: 'POST',
-            url: '/api/events/move',
-            data: JSON.stringify(params),
-            success: function (data) {
-                dp.message("Moved");
-            },
-            contentType: "application/json",
-            dataType: 'json'
-        });
-    };
-    dp.onEventResize = function (args) {
-        var params = {
-            id: args.e.id(),
-            start: args.newStart.toString(),
-            end: args.newEnd.toString(),
-            resource: args.e.resource()
-        };
-        $.ajax({
-            type: 'POST',
-            url: '/api/events/move',
-            data: JSON.stringify(params),
-            success: function (data) {
-                dp.message("Resized");
-            },
-            contentType: "application/json",
-            dataType: 'json'
-        });
-    };
-    dp.onBeforeEventRender = function(args) {
-        args.data.backColor = args.data.color;
-        args.data.areas = [
-            { top: 4, right: 4, width: 12, height: 14, icon: "icon-triangle-down", visibility: "Visible", action: "ContextMenu", style: "font-size: 12px; background-color: #fff; border: 1px solid #ccc; padding: 2px 2px 0px 2px; cursor:pointer;"}
-        ];
-    };
-    dp.contextMenu = new DayPilot.Menu({
-        items: [
-            {
-                text: "Delete",
-                onClick: function(args) {
-                    var e = args.source;
-                    var params = {
-                        id: e.id()
-                    };
-                    $.ajax({
-                        type: 'POST',
-                        url: '/api/events/delete',
-                        data: JSON.stringify(params),
-                        success: function (data) {
-                            dp.events.remove(e);
-                            dp.message("Deleted");
-                        },
-                        contentType: "application/json",
-                        dataType: 'json'
-                    });
-                }
-            },
-            {
-                text: "-"
-            },
-            {
-                text: "Blue",
-                icon: "icon icon-blue",
-                color: "#a2c4c9",
-                onClick: function(args) { updateColor(args.source, args.item.color); }
-            },
-            {
-                text: "Green",
-                icon: "icon icon-green",
-                color: "#b6d7a8",
-                onClick: function(args) { updateColor(args.source, args.item.color); }
-            },
-            {
-                text: "Yellow",
-                icon: "icon icon-yellow",
-                color: "#ffe599",
-                onClick: function(args) { updateColor(args.source, args.item.color); }
-            },
-            {
-                text: "Red",
-                icon: "icon icon-red",
-                color: "#ea9999",
-                onClick: function(args) { updateColor(args.source, args.item.color); }
-            },            {
-                text: "Auto",
-                color: "auto",
-                onClick: function(args) { updateColor(args.source, args.item.color); }
-            },
-
-        ]
-    });
-    dp.init();
-
-    dp.events.load("/api/events");
-
-
-    function updateColor(e, color) {
-        var params = {
-            id: e.id(),
-            color: color
-        };
-        $.ajax({
-            type: 'POST',
-            url: '/api/events/setColor',
-            data: JSON.stringify(params),
-            success: function (data) {
-                e.data.color = color;
-                dp.events.update(e);
-            },
-            contentType: "application/json",
-            dataType: 'json'
-        });
-    }
-
-    $(document).ready(function() {
-        $("#weekends").click(function() {
-            dp.showWeekend = $("#weekends").is(":checked");
-            dp.update();
-        });
-
-        $("#download").click(function() {
-            var format = $("#format").val();
-            dp.exportAs(format).download();
-        });
-    });
-
-</script>
 
 {{>layout/footer}}
